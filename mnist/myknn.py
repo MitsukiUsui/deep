@@ -5,7 +5,7 @@ import numpy as np
 
 
 def knn(train_X, train_y, test_X, kMax=20):
-    """ train by k-NN
+    """ train by k-nearest neighbor
     
     arguments:
         kMax: k will be searched among [1,kMax]

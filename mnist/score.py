@@ -22,7 +22,15 @@ def load_mnist():
                 test_size=0.2,
                 random_state=42)
 
-def score(func,  size=None, **kwargs ):
+def score(model,  size=None, **kwargs ):
+    """calculate F1-score　for each model
+    
+    arguments:
+        model    :  model(train_X, train_y, test_X, **kwargs) -> pred_y
+        size       :  size of training data
+        **kwargs: argument for given model 
+    """
+
     train_X, test_X, train_y, test_y = load_mnist()
     
     if size is not None:
@@ -31,5 +39,5 @@ def score(func,  size=None, **kwargs ):
         test_X = test_X[:size]
         test_y = test_y[:size]
     
-    pred_y = func(train_X, train_y, test_X,  **kwargs)
+    pred_y = model(train_X, train_y, test_X,  **kwargs)
     print(f1_score(test_y, pred_y, average='macro'))
