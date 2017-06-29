@@ -8,7 +8,7 @@ rng = np.random.RandomState(1234)
 random_state = 42
 
 
-def mlp(train_X, train_y, test_X, hid_dim = 100, n_epochs=10,  batch_size=100 ,eps=0.1):
+def mlp_notf(train_X, train_y, test_X, hid_dim = 100, n_epochs=10,  batch_size=100 ,eps=0.1):
     """ train by multiple layer perceptron without tensorflow
     
     arguments:

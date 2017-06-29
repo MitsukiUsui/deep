@@ -23,12 +23,12 @@ def load_mnist():
                 random_state=42)
 
 def score(model,  size=None, **kwargs ):
-    """calculate F1-score　for each model
+    """calculate F1-score　for each model on MNIST
     
     arguments:
         model    :  model(train_X, train_y, test_X, **kwargs) -> pred_y
         size       :  size of training data
-        **kwargs: argument for given model 
+        **kwargs: arguments for given model 
     """
 
     train_X, test_X, train_y, test_y = load_mnist()
