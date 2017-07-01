@@ -5,12 +5,15 @@ from keras.datasets import imdb
 from keras.preprocessing.sequence import pad_sequences
 
 import sys
+import os
 import numpy as np
 import tensorflow as tf
 
 rng = np.random.RandomState(1234)
 random_state=42
 padding_value=0
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 
 #--------------------------------------------------------------------------------
 #  Random orthogonal initializer (see [Saxe et al. 2013])
@@ -98,7 +101,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
     y = f_props(layers, x)
     cost = tf.reduce_mean(-t*tf.log(tf.clip_by_value(y, 1e-10, 1.0)) - (1. - t)*tf.log(tf.clip_by_value(1.-y, 1e-10, 1.0)))
     train = tf.train.AdamOptimizer().minimize(cost)
-    pred = tf.round(y)
+    test = tf.round(y)
 
  
    	#--------------------------------------------------------------------------------
@@ -143,7 +146,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
                 valid_X_mb = np.array(pad_sequences(valid_X[start:end], padding='post', value=padding_value)) # Padding
                 valid_y_mb = np.array(valid_y[start:end])[:, np.newaxis]
 
-                pred, valid_cost = sess.run([pred, cost], feed_dict={x: valid_X_mb, t: valid_y_mb})
+                pred, valid_cost = sess.run([test, cost], feed_dict={x: valid_X_mb, t: valid_y_mb})
                 pred_y += pred.flatten().tolist()
                 valid_costs.append(valid_cost)
             print('EPOCH: %i, Training cost: %.3f, Validation cost: %.3f, Validation F1: %.3f' % (epoch+1, np.mean(train_costs), np.mean(valid_costs), f1_score(valid_y, pred_y, average='macro')))
@@ -154,7 +157,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
             start = i * batch_size
             end = start + batch_size
             test_X_mb = np.array(pad_sequences(test_X[start:end], padding='post', value=padding_value)) # Padding
-            pred = sess.run(pred, feed_dict={x: test_X_mb})
+            pred = sess.run(test, feed_dict={x: test_X_mb})
             pred_y+=pred.flatten().tolist()
     return pred_y
 
