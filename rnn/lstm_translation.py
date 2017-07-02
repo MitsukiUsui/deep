@@ -217,6 +217,13 @@ def lstm(train_X, train_y, e_vocab, j_vocab, emb_dim=256, hid_dim=256, n_epochs=
     #learning main
     #--------------------------------------------------------------------------------
   
+    train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y, test_size=0.02, random_state=42)
+    
+    train_X_lens = [len(com) for com in train_X]
+    sorted_train_indexes = sorted(range(len(train_X_lens)), key=lambda x: -train_X_lens[x])
+    train_X = [train_X[idx] for idx in sorted_train_indexes]
+    train_y = [train_y[idx] for idx in sorted_train_indexes]
+    
     n_batches = len(train_X) // batch_size
     
     with tf.Session() as sess:
@@ -246,17 +253,13 @@ def lstm(train_X, train_y, e_vocab, j_vocab, emb_dim=256, hid_dim=256, n_epochs=
     
 def main():
     # 英語->日本語
-    train_X, e_vocab = load_data('/Users/mitsuki/sandbox/deeplearning/deep/rnn/small_parallel_enja/train.en')
-    train_y, j_vocab = load_data('/Users/mitsuki/sandbox/deeplearning/deep/rnn/small_parallel_enja/train.ja')
+    train_X, e_vocab = load_data('./small_parallel_enja/train.en')
+    train_y, j_vocab = load_data('./small_parallel_enja/train.ja')
+    
     train_X, test_X, train_y, test_y = train_test_split(train_X, train_y, test_size=0.02, random_state=42)
-    train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y, test_size=0.02, random_state=42)
-    
-    train_X_lens = [len(com) for com in train_X]
-    sorted_train_indexes = sorted(range(len(train_X_lens)), key=lambda x: -train_X_lens[x])
-    train_X = [train_X[idx] for idx in sorted_train_indexes]
-    train_y = [train_y[idx] for idx in sorted_train_indexes]
-    
     lstm(train_X, train_y, e_vocab, j_vocab)
+
+    
     
     
 if __name__=="__main__":
