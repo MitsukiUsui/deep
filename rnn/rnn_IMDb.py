@@ -11,7 +11,7 @@ import tensorflow as tf
 
 rng = np.random.RandomState(1234)
 random_state=42
-padding_value=0
+PAD=0
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 
@@ -81,16 +81,17 @@ class Dense:
     
     
 def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=5, batch_size=100):
+	#--------------------------------------------------------------------------------
+	# graph construction
+	#--------------------------------------------------------------------------------
+    
     def f_props(layers, x):
         for i, layer in enumerate(layers):
             x = layer.f_prop(x)
         return x
-
-	#--------------------------------------------------------------------------------
-	# layer configuration
-	#--------------------------------------------------------------------------------
+    
     x = tf.placeholder(tf.int32, [None, None], name='x')
-    m = tf.cast(tf.not_equal(x, padding_value), tf.float32) # Mask. Paddingの部分(padding_value)は0, 他の値は1
+    m = tf.cast(tf.not_equal(x, PAD), tf.float32) # Mask. Paddingの部分(PAD)は0, 他の値は1
     t = tf.placeholder(tf.float32, [None, None], name='t')
 
     layers = [
@@ -130,7 +131,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
                 start = i * batch_size
                 end = start + batch_size
 
-                train_X_mb = np.array(pad_sequences(train_X[start:end], padding='post', value=padding_value)) # Padding
+                train_X_mb = np.array(pad_sequences(train_X[start:end], padding='post', value=PAD)) # Padding
                 train_y_mb = np.array(train_y[start:end])[:, np.newaxis]
 
                 _, train_cost = sess.run([train, cost], feed_dict={x: train_X_mb, t: train_y_mb})
@@ -143,7 +144,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
                 start = i * batch_size
                 end = start + batch_size
 
-                valid_X_mb = np.array(pad_sequences(valid_X[start:end], padding='post', value=padding_value)) # Padding
+                valid_X_mb = np.array(pad_sequences(valid_X[start:end], padding='post', value=PAD)) # Padding
                 valid_y_mb = np.array(valid_y[start:end])[:, np.newaxis]
 
                 pred, valid_cost = sess.run([test, cost], feed_dict={x: valid_X_mb, t: valid_y_mb})
@@ -156,7 +157,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
         for i in range(n_batches_test):
             start = i * batch_size
             end = start + batch_size
-            test_X_mb = np.array(pad_sequences(test_X[start:end], padding='post', value=padding_value)) # Padding
+            test_X_mb = np.array(pad_sequences(test_X[start:end], padding='post', value=PAD)) # Padding
             pred = sess.run(test, feed_dict={x: test_X_mb})
             pred_y+=pred.flatten().tolist()
     return pred_y
