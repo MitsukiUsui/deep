@@ -219,8 +219,8 @@ class Attention:
     
     
 def main():
-    train_y, w2i, i2w = load_data('./mscoco_captions_10000.txt', target=True)
-    train_X = np.load('./mscoco_images_10000.npy')  
+    train_y, w2i, i2w = load_data('./data/mscoco_captions_10000.txt', target=True)
+    train_X = np.load('./data/mscoco_images_10000.npy')  
     train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y, test_size=0.1)
     
     train_y_lens = [len(com) for com in train_y]
