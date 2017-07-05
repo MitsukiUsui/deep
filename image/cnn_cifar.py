@@ -157,7 +157,7 @@ def cnn(train_X, train_y, test_X, n_epochs = 20, batch_size = 100):
 	# preprocess
 	#--------------------------------------------------------------------------------
     
-    print("BEGIN: cnn with  n_epochs = {0}, batch_size = {1}".format(n_epochs, batch_size))
+    print("BEGIN: cnn with n_epochs = {0}, batch_size = {1}".format(n_epochs, batch_size))
     train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y, test_size=0.1, random_state=random_state)
     
     ##preprocess
