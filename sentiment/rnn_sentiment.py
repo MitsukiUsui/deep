@@ -108,6 +108,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
    	#--------------------------------------------------------------------------------
 	#learning main
 	#--------------------------------------------------------------------------------
+    print("BEGIN: rnn with emb_dim = {0}, hid_dim = {1}, n_epochs = {1}, batch_size = {2}".format(emb_dim, hid_dim, n_epochs, batch_size))
     # split data into training and validation
     train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y, test_size=0.2, random_state=random_state)
 
@@ -150,7 +151,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
                 pred, valid_cost = sess.run([test, cost], feed_dict={x: valid_X_mb, t: valid_y_mb})
                 pred_y += pred.flatten().tolist()
                 valid_costs.append(valid_cost)
-            print('EPOCH: %i, Training cost: %.3f, Validation cost: %.3f, Validation F1: %.3f' % (epoch+1, np.mean(train_costs), np.mean(valid_costs), f1_score(valid_y, pred_y, average='macro')))
+            print('\tEPOCH: %i, Training cost: %.3f, Validation cost: %.3f, Validation F1: %.3f' % (epoch+1, np.mean(train_costs), np.mean(valid_costs), f1_score(valid_y, pred_y, average='macro')))
     
         # Test
         pred_y=[]
