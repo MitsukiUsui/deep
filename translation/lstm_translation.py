@@ -216,7 +216,7 @@ def lstm(train_X, train_y, e_vocab, j_vocab, emb_dim=256, hid_dim=256, n_epochs=
     #--------------------------------------------------------------------------------
     #learning main
     #--------------------------------------------------------------------------------
-    print("BEGIN: lstm with emb_dim = {0}, hid_dim = {1}, n_epochs = {1}, batch_size = {2}".format(emb_dim, hid_dim, n_epochs, batch_size))
+    print("BEGIN: lstm with emb_dim = {0}, hid_dim = {1}, n_epochs = {2}, batch_size = {3}".format(emb_dim, hid_dim, n_epochs, batch_size))
     train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y, test_size=0.02, random_state=42)
     
     train_X_lens = [len(com) for com in train_X]

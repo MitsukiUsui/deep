@@ -108,7 +108,7 @@ def rnn(train_X, train_y, test_X,  num_words, emb_dim=100, hid_dim=50, n_epochs=
    	#--------------------------------------------------------------------------------
 	#learning main
 	#--------------------------------------------------------------------------------
-    print("BEGIN: rnn with emb_dim = {0}, hid_dim = {1}, n_epochs = {1}, batch_size = {2}".format(emb_dim, hid_dim, n_epochs, batch_size))
+    print("BEGIN: rnn with emb_dim = {0}, hid_dim = {1}, n_epochs = {2}, batch_size = {3}".format(emb_dim, hid_dim, n_epochs, batch_size))
     # split data into training and validation
     train_X, valid_X, train_y, valid_y = train_test_split(train_X, train_y, test_size=0.2, random_state=random_state)
 
