@@ -15,7 +15,7 @@ This is a tutorial for image classification using MNIST.
 0. [cnn.py](https://github.com/MitsukiUsui/deep/tree/master/mnist/mymodels/cnn.py)
     * Convolutional neural network (CNN)
 
-The accuracy of those 4 (+1) programs can be evaluated on a same interface. 
+The accuracy of those 4 (+1) programs can be evaluated on a same interface.
 
 ### Image Classification
 Classification of CIFAR-10 by CNN and various preprocessing.
@@ -34,8 +34,8 @@ English-Japanese machine translation by Long Short-Term Memory (LSTM), trained b
 Image caption generation of MS COCO (Microsoft Common Objects in Context) by CNN + LSTM + Attention model.
 
 ## Environment
+Assume you are using anaconda3 environment.
 ```
-(installation of pyenv)
-(installation of anaconda3-??)
-pip install upgrade tensorflow
+pip install tensorflow-gpu
+pip install keras
 ```
